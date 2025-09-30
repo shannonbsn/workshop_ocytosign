@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('id_rdv');
             $table->unsignedBigInteger('id_medecin');
             $table->unsignedBigInteger('id_interprete');
+            $table->date('date_debut');
+            $table->date('date_fin');
 
             $table->foreign('id_medecin')->references('id_medecin')->on('medecins')->onDelete('cascade');
             $table->foreign('id_interprete')->references('id_interprete')->on('interpretres')->onDelete('cascade');
