@@ -24,9 +24,15 @@ class InterpreteController extends Controller
     {
         $request->validate([
             'id_medecin' => 'required|exists:medecins,id_medecin',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
         ]);
 
-        return Interprete::create($request->all());
+        return Interprete::create([
+            'id_medecin' => $request->id_medecin,
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+        ]);
     }
 
     /**
@@ -45,13 +51,22 @@ class InterpreteController extends Controller
     public function update(Request $request, $id)
     {
         $interprete = Interprete::findOrFail($id);
+
         $request->validate([
             'id_medecin' => 'required|exists:medecins,id_medecin',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
         ]);
 
-        $interprete->update($request->all());
+        $interprete->update([
+            'id_medecin' => $request->id_medecin,
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+        ]);
+
         return $interprete;
     }
+
 
     /**
      * Remove the specified resource from storage.
