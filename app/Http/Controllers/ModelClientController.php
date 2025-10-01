@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ModelClient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class ModelClientController extends Controller
 {
@@ -31,6 +33,47 @@ class ModelClientController extends Controller
 
         return ModelClient::create($request->all());
     }
+
+    /**
+     * Registers a new user and returns an access token for API access.
+     */
+    //Route: POST /register
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json(['token' => $token], 201);
+    }
+
+    /**
+     * Authenticates the user and returns an access token for API access.
+     */
+    //Route: POST /login
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        $token = $user->createToken('mobile-app', ['server:update'])->plainTextToken;
+
+        return response()->json(['token' => $token]);
+    }
+
 
     /**
      * Display the specified resource.
