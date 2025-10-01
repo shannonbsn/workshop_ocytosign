@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\InterpreteController;
 use App\Http\Controllers\MedecinController;
 use App\Http\Controllers\ModelClientController;
+use App\Http\Controllers\ModelRdvController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,3 +43,10 @@ Route::post('/clients', [ModelClientController::class, 'store'])->name('clients.
 Route::get('/clients/{id}', [ModelClientController::class, 'show'])->name('clients.show');
 Route::put('/clients/{id}', [ModelClientController::class, 'update'])->name('clients.update');
 Route::delete('/clients/{id}', [ModelClientController::class, 'destroy'])->name('clients.destroy');
+
+// Routes pour la table Rdvs
+Route::get('/rdvs', [ModelRdvController::class, 'index'])->name('rdvs.index');
+Route::post('/rdvs', [ModelRdvController::class, 'store'])->name('rdvs.store');
+Route::get('/rdvs/{id}', [ModelRdvController::class, 'show'])->name('rdvs.show');
+Route::put('/rdvs/{id}', [ModelRdvController::class, 'update'])->name('rdvs.update');
+Route::delete('/rdvs/{id}', [ModelRdvController::class, 'destroy'])->name('rdvs.destroy');
