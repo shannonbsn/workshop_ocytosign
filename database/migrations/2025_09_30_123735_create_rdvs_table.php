@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id('id_rdv');
             $table->unsignedBigInteger('id_medecin');
             $table->unsignedBigInteger('id_interprete');
+            $table->unsignedBigInteger('id_client');
             $table->date('date_debut');
             $table->date('date_fin');
             $table->boolean('presentiel')->default(false);
 
             $table->foreign('id_medecin')->references('id_medecin')->on('medecins')->onDelete('cascade');
             $table->foreign('id_interprete')->references('id_interprete')->on('interpretres')->onDelete('cascade');
+            $table->foreign('id_client')->references('id_client')->on('clients')->onDelete('cascade');
             $table->timestamps();
         });
     }

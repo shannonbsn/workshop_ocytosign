@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\ModelRdv;
 use App\Models\Medecin;
 use App\Models\Interprete;
+use App\Models\ModelClient;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ModelRdvFactory extends Factory
@@ -19,6 +20,7 @@ class ModelRdvFactory extends Factory
         return [
             'id_medecin' => Medecin::factory(),
             'id_interprete' => Interprete::factory(),
+            'id_client' => ModelClient::factory(),
             'date_debut' => $dateDebut,
             'date_fin' => $dateFin,
             'presentiel' => $this->faker->boolean(),
