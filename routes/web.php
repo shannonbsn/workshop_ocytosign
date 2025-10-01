@@ -22,3 +22,10 @@ Route::post('/medecins', [MedecinController::class, 'store'])->name('medecins.st
 Route::get('/medecins/{id}', [MedecinController::class, 'show'])->name('medecins.show');
 Route::put('/medecins/{id}', [MedecinController::class, 'update'])->name('medecins.update');
 Route::delete('/medecins/{id}', [MedecinController::class, 'destroy'])->name('medecins.destroy');
+
+// Routes pour la table Clients
+Route::get('/clients', [ModelClientController::class, 'index'])->name('clients.index');
+Route::post('/clients', [ModelClientController::class, 'store'])->name('clients.store');
+Route::get('/clients/{id}', [ModelClientController::class, 'show'])->name('clients.show');
+Route::put('/clients/{id}', [ModelClientController::class, 'update'])->name('clients.update');
+Route::delete('/clients/{id}', [ModelClientController::class, 'destroy'])->name('clients.destroy');
