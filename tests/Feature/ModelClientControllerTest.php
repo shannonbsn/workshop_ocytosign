@@ -12,7 +12,7 @@ class ModelClientControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    public function it_registers_a_new_user_and_returns_a_token()
+    public function test_it_registers_a_new_user_and_returns_a_token()
     {
         $response = $this->postJson('/api/register', [
             'name' => 'Jane Doe',
@@ -28,7 +28,7 @@ class ModelClientControllerTest extends TestCase
         ]);
     }
 
-    public function it_fails_to_register_with_existing_email()
+    public function test_it_fails_to_register_with_existing_email()
     {
         ModelClient::factory()->create([
             'email' => 'jane@example.com',
@@ -44,7 +44,7 @@ class ModelClientControllerTest extends TestCase
         $response->assertJsonValidationErrors(['email']);
     }
 
-    public function it_logs_in_a_client_and_returns_a_token()
+    public function test_it_logs_in_a_client_and_returns_a_token()
     {
         $client = ModelClient::factory()->create([
             'email' => 'test@example.com',
@@ -60,7 +60,7 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonStructure(['token']);
     }
 
-    public function it_fails_to_login_with_invalid_credentials()
+    public function test_it_fails_to_login_with_invalid_credentials()
     {
         $client = ModelClient::factory()->create([
             'email' => 'test@example.com',
@@ -76,7 +76,7 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonFragment(['error' => 'Invalid credentials']);
     }
 
-    public function it_lists_clients()
+    public function test_it_lists_clients()
     {
         ModelClient::factory()->count(3)->create();
 
@@ -86,7 +86,7 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonCount(3);
     }
 
-    public function it_creates_a_client()
+    public function test_it_creates_a_client()
     {
         $response = $this->postJson('/api/clients', [
             'nom' => 'Doe',
@@ -99,7 +99,7 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonFragment(['email' => 'john.doe@example.com']);
     }
 
-    public function it_updates_a_client()
+    public function test_it_updates_a_client()
     {
         $client = ModelClient::factory()->create();
 
@@ -114,7 +114,7 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonFragment(['email' => 'new@example.com']);
     }
 
-    public function it_deletes_a_client()
+    public function test_it_deletes_a_client()
     {
         $client = ModelClient::factory()->create();
 
