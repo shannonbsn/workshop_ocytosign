@@ -2,12 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\InterpreteController;
 use App\Http\Controllers\MedecinController;
 use App\Http\Controllers\ModelClientController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Création du token d'authentification
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
 });
 
 // Routes pour la table Interpretes
