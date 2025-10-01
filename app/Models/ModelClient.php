@@ -22,9 +22,12 @@ class ModelClient extends Authenticatable
         'password',
     ];
 
-    public function getRememberTokenName()
-    {
-        return null; // désactive le remember_token
-    }
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }
