@@ -10,56 +10,61 @@ class MedecinController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // GET /medecins
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return Medecin::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    // POST /medecins
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+        ]);
+
+        return Medecin::create($request->all());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Medecin $medecin)
+    // GET /medecins/{id}
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Medecin $medecin)
-    {
-        //
+        return Medecin::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Medecin $medecin)
+    // PUT /medecins/{id}
+    public function update(Request $request, $id)
     {
-        //
+        $medecin = Medecin::findOrFail($id);
+
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+        ]);
+
+        $medecin->update($request->all());
+        return $medecin;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Medecin $medecin)
+    // DELETE /medecins/{id}
+    public function destroy($id)
     {
-        //
+        $medecin = Medecin::findOrFail($id);
+        $medecin->delete();
+
+        return response()->json(['message' => 'Supprimé avec succès']);
     }
 }
