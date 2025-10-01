@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InterpreteController;
 use App\Http\Controllers\MedecinController;
+use App\Http\Controllers\ModelClientController;
 
 Route::get('/', function () {
     return view('welcome');
