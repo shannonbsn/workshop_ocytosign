@@ -41,18 +41,22 @@ class ModelClientController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:clients,email',
+            'tel' => 'nullable|string|max:20',
             'password' => 'required|string|min:8',
         ]);
 
-        $user = User::create([
-            'name' => $validated['name'],
+        $client = ModelClient::create([
+            'nom' => $validated['nom'],
+            'prenom' => $validated['prenom'],
             'email' => $validated['email'],
+            'tel' => $validated['tel'] ?? null,
             'password' => Hash::make($validated['password']),
         ]);
 
-        $token = $user->createToken('mobile-app')->plainTextToken;
+        $token = $client->createToken('client-token')->plainTextToken;
 
         return response()->json(['token' => $token], 201);
     }
@@ -63,13 +67,13 @@ class ModelClientController extends Controller
     //Route: POST /login
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $client = ModelClient::where('email', $request->email)->first();
 
-        if (!Hash::check($request->password, $user->password)) {
+        if (!$client || !Hash::check($request->password, $client->password)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 
-        $token = $user->createToken('mobile-app', ['server:update'])->plainTextToken;
+        $token = $client->createToken('client-token')->plainTextToken;
 
         return response()->json(['token' => $token]);
     }
