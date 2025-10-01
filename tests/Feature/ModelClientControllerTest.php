@@ -15,15 +15,17 @@ class ModelClientControllerTest extends TestCase
     public function test_it_registers_a_new_user_and_returns_a_token()
     {
         $response = $this->postJson('/api/register', [
-            'name' => 'Jane Doe',
+            'nom' => 'Doe',
+            'prenom' => 'Jane',
             'email' => 'jane@example.com',
+            'tel' => '0601020304',
             'password' => 'securePass123',
         ]);
 
         $response->assertStatus(201)
             ->assertJsonStructure(['token']);
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('clients', [
             'email' => 'jane@example.com',
         ]);
     }
@@ -35,8 +37,10 @@ class ModelClientControllerTest extends TestCase
         ]);
 
         $response = $this->postJson('/api/register', [
-            'name' => 'Jane Duplicate',
+            'nom' => 'Duplicate',
+            'prenom' => 'Jane',
             'email' => 'jane@example.com',
+            'tel' => '0601020304',
             'password' => 'anotherPass123',
         ]);
 
@@ -86,18 +90,32 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonCount(3);
     }
 
-    public function test_it_creates_a_client()
+    public function test_it_stores_a_new_client()
     {
-        $response = $this->postJson('/api/clients', [
-            'nom' => 'Doe',
-            'prenom' => 'John',
-            'email' => 'john.doe@example.com',
-            'tel' => '0700000000'
-        ]);
+        $payload = [
+            'nom' => 'Dupont',
+            'prenom' => 'Alice',
+            'email' => 'alice.dupont@example.com',
+            'tel' => '0612345678',
+            'password' => 'monMotDePasse123',
+        ];
+
+        $response = $this->postJson('/api/clients', $payload);
 
         $response->assertStatus(201)
-            ->assertJsonFragment(['email' => 'john.doe@example.com']);
+            ->assertJsonFragment([
+                'email' => 'alice.dupont@example.com',
+                'nom' => 'Dupont',
+                'prenom' => 'Alice',
+            ]);
+
+        $this->assertDatabaseHas('clients', [
+            'email' => 'alice.dupont@example.com',
+            'nom' => 'Dupont',
+            'prenom' => 'Alice',
+        ]);
     }
+
 
     public function test_it_updates_a_client()
     {
