@@ -21,4 +21,10 @@ class ModelClient extends Authenticatable
         'tel',
         'password',
     ];
+
+    public function getRememberTokenName()
+    {
+        return null; // désactive le remember_token
+    }
+
 }

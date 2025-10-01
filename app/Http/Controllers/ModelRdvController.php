@@ -16,9 +16,19 @@ class ModelRdvController extends Controller
     // Crée un nouveau RDV
     public function store(Request $request)
     {
-        $rdv = ModelRdv::create($request->all());
-        return response()->json($rdv, 201);
-    }
+        $data = $request->only([
+            'id_client',
+            'id_medecin',
+            'id_interprete',
+            'date_debut',
+            'date_fin',
+            'presentiel'
+    ]);
+
+    $rdv = ModelRdv::create($data);
+    return response()->json($rdv, 201);
+}
+
 
     // Affiche un RDV précis
     public function show($id)
