@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\ModelClient;
 use App\Models\ModelRdv;
 use App\Models\Medecin;
 use App\Models\Interprete;
@@ -11,6 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class RdvControllerTest extends TestCase
 {
     use RefreshDatabase;
+    
 
     public function test_index_returns_all_rdvs(): void
     {
@@ -24,21 +26,21 @@ class RdvControllerTest extends TestCase
 
     public function test_store_creates_an_rdv(): void
     {
+
+        $client = ModelClient::factory()->create();
         $medecin = Medecin::factory()->create();
         $interprete = Interprete::factory()->create();
-        $medecinId = 1;
-        $interpreteId = 1;
 
         $data = [
-            'id_medecin' => $medecinId,
-            'id_interprete' => $interpreteId,
-            'date_debut' => now()->addDay()->toDateTimeString(),
-            'date_fin' => now()->addDay()->addHour()->toDateTimeString(),
+            'id_client' => $client->id_client,
+            'id_medecin' => $medecin->id_medecin,
+            'id_interprete' => $interprete->id_interprete,
+            'date_debut' => '2025-10-02 14:03:15',
+            'date_fin' => '2025-10-02 15:03:15',
             'presentiel' => true,
         ];
 
-        $response = $this->post('/rdvs', $data);
-
+        $response = $this->postJson('/rdvs', $data);
         $response->assertStatus(201);
         $this->assertDatabaseHas('rdvs', $data);
     }

@@ -15,6 +15,7 @@ class ModelRdv extends Model
     protected $fillable = [
         'id_medecin',
         'id_interprete',
+        'id_client',
         'date_debut',
         'date_fin',
         'presentiel'
