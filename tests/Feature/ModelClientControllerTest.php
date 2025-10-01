@@ -15,15 +15,17 @@ class ModelClientControllerTest extends TestCase
     public function test_it_registers_a_new_user_and_returns_a_token()
     {
         $response = $this->postJson('/api/register', [
-            'name' => 'Jane Doe',
+            'nom' => 'Doe',
+            'prenom' => 'Jane',
             'email' => 'jane@example.com',
+            'tel' => '0601020304',
             'password' => 'securePass123',
         ]);
 
         $response->assertStatus(201)
             ->assertJsonStructure(['token']);
 
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('clients', [
             'email' => 'jane@example.com',
         ]);
     }
@@ -35,8 +37,10 @@ class ModelClientControllerTest extends TestCase
         ]);
 
         $response = $this->postJson('/api/register', [
-            'name' => 'Jane Duplicate',
+            'nom' => 'Duplicate',
+            'prenom' => 'Jane',
             'email' => 'jane@example.com',
+            'tel' => '0601020304',
             'password' => 'anotherPass123',
         ]);
 
@@ -48,6 +52,7 @@ class ModelClientControllerTest extends TestCase
     {
         $client = ModelClient::factory()->create([
             'email' => 'test@example.com',
+            // Si la factory ne hash pas le mot de passe, on le hash ici :
             'password' => Hash::make('password123'),
         ]);
 

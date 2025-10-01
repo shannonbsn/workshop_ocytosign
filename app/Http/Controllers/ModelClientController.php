@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ModelClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\JsonResponse;
 
 class ModelClientController extends Controller
 {
@@ -38,7 +39,7 @@ class ModelClientController extends Controller
      * Registers a new user and returns an access token for API access.
      */
     //Route: POST /register
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
@@ -61,15 +62,16 @@ class ModelClientController extends Controller
         return response()->json(['token' => $token], 201);
     }
 
-    /**
-     * Authenticates the user and returns an access token for API access.
-     */
-    //Route: POST /login
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
-        $client = ModelClient::where('email', $request->email)->first();
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
 
-        if (!$client || !Hash::check($request->password, $client->password)) {
+        $client = ModelClient::where('email', $validated['email'])->first();
+
+        if (!$client || !Hash::check($validated['password'], $client->password)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
 

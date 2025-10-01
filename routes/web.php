@@ -12,17 +12,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Création du token d'authentification
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-
-    return ['token' => $token->plainTextToken];
-});
-
-// Route pour l'authentification des clients
-Route::post('/login', [ModelClientController::class, 'login'])->name('clients.login');
-Route::post('/register', [ModelClientController::class, 'register'])->name('clients.register');
-
 // Routes pour la table Interpretes
 Route::get('/interpretres', [InterpreteController::class, 'index'])->name('interpretres.index');
 Route::post('/interpretres', [InterpreteController::class, 'store'])->name('interpretres.store');
