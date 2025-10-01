@@ -11,3 +11,4 @@ Route::get('/user', function (Request $request) {
 // Route pour l'authentification des clients
 Route::post('/login', [ModelClientController::class, 'login'])->name('clients.login');
 Route::post('/register', [ModelClientController::class, 'register'])->name('clients.register');
+Route::apiResource('clients', ModelClientController::class);

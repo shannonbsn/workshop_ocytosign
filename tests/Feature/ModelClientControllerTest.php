@@ -90,18 +90,32 @@ class ModelClientControllerTest extends TestCase
             ->assertJsonCount(3);
     }
 
-    public function test_it_creates_a_client()
+    public function test_it_stores_a_new_client()
     {
-        $response = $this->postJson('/api/clients', [
-            'nom' => 'Doe',
-            'prenom' => 'John',
-            'email' => 'john.doe@example.com',
-            'tel' => '0700000000'
-        ]);
+        $payload = [
+            'nom' => 'Dupont',
+            'prenom' => 'Alice',
+            'email' => 'alice.dupont@example.com',
+            'tel' => '0612345678',
+            'password' => 'monMotDePasse123',
+        ];
+
+        $response = $this->postJson('/api/clients', $payload);
 
         $response->assertStatus(201)
-            ->assertJsonFragment(['email' => 'john.doe@example.com']);
+            ->assertJsonFragment([
+                'email' => 'alice.dupont@example.com',
+                'nom' => 'Dupont',
+                'prenom' => 'Alice',
+            ]);
+
+        $this->assertDatabaseHas('clients', [
+            'email' => 'alice.dupont@example.com',
+            'nom' => 'Dupont',
+            'prenom' => 'Alice',
+        ]);
     }
+
 
     public function test_it_updates_a_client()
     {

@@ -30,6 +30,7 @@ class ModelClientController extends Controller
             'prenom' => 'required|string|max:255',
             'email'  => 'required|email|unique:clients,email',
             'tel'    => 'nullable|string|max:20',
+            'password' => 'required|string|min:8',
         ]);
 
         return ModelClient::create($request->all());
