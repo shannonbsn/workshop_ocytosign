@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class ModelClient extends Model
+class ModelClient extends Authenticatable
 {
-    use HasFactory;
-    use HasApiTokens;
+    use HasFactory, HasApiTokens, Authenticatable, Notifiable;
 
     protected $table = 'clients';
     protected $primaryKey = 'id_client';
