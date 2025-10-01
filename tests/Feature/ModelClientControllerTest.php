@@ -2,14 +2,15 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\ModelClient;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 
-class ModelClientTest extends TestCase
+class ModelClientControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     public function it_registers_a_new_user_and_returns_a_token()
     {
@@ -75,7 +76,6 @@ class ModelClientTest extends TestCase
             ->assertJsonFragment(['error' => 'Invalid credentials']);
     }
 
-    /** @test */
     public function it_lists_clients()
     {
         ModelClient::factory()->count(3)->create();
@@ -86,7 +86,6 @@ class ModelClientTest extends TestCase
             ->assertJsonCount(3);
     }
 
-    /** @test */
     public function it_creates_a_client()
     {
         $response = $this->postJson('/api/clients', [
@@ -100,7 +99,6 @@ class ModelClientTest extends TestCase
             ->assertJsonFragment(['email' => 'john.doe@example.com']);
     }
 
-    /** @test */
     public function it_updates_a_client()
     {
         $client = ModelClient::factory()->create();
@@ -116,7 +114,6 @@ class ModelClientTest extends TestCase
             ->assertJsonFragment(['email' => 'new@example.com']);
     }
 
-    /** @test */
     public function it_deletes_a_client()
     {
         $client = ModelClient::factory()->create();
