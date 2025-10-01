@@ -52,7 +52,6 @@ class ModelClientControllerTest extends TestCase
     {
         $client = ModelClient::factory()->create([
             'email' => 'test@example.com',
-            // Si la factory ne hash pas le mot de passe, on le hash ici :
             'password' => Hash::make('password123'),
         ]);
 
