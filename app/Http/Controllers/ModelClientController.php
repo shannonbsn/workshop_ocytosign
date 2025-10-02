@@ -2,27 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use OpenApi\Annotations as OA;
+
 use App\Models\ModelClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 
 class ModelClientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/clients",
+     *     summary="Liste des clients",
+     *     tags={"Clients"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste des clients récupérée avec succès"
+     *     )
+     * )
      */
-    // GET /clients
     public function index()
     {
         return ModelClient::all();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/clients",
+     *     summary="Créer un nouveau client",
+     *     tags={"Clients"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nom","prenom","email","password"},
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="prenom", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="tel", type="string"),
+     *             @OA\Property(property="password", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Client créé avec succès"
+     *     )
+     * )
      */
-    // POST /clients
     public function store(Request $request)
     {
         $request->validate([
@@ -37,9 +63,27 @@ class ModelClientController extends Controller
     }
 
     /**
-     * Registers a new user and returns an access token for API access.
+     * @OA\Post(
+     *     path="/api/register",
+     *     summary="Créer un nouveau profil client",
+     *     tags={"Clients"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nom","prenom","email","password"},
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="prenom", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="tel", type="string"),
+     *             @OA\Property(property="password", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Profil client créé avec succès"
+     *     )
+     * )
      */
-    //Route: POST /register
     public function register(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -63,6 +107,29 @@ class ModelClientController extends Controller
         return response()->json(['token' => $token], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Connexion du client",
+     *     tags={"Clients"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password"},
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="password", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Connexion réussie, token retourné"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Identifiants invalides"
+     *     )
+     * )
+     */
     public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -83,18 +150,53 @@ class ModelClientController extends Controller
 
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/clients/{id}",
+     *     summary="Afficher un client",
+     *     tags={"Clients"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Client trouvé"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Client non trouvé"
+     *     )
+     * )
      */
-    // GET /clients/{id_client}
     public function show($id)
     {
         return ModelClient::findOrFail($id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/clients",
+     *     summary="Modifier un profil client",
+     *     tags={"Clients"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nom","prenom","email","password"},
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="prenom", type="string"),
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="tel", type="string"),
+     *             @OA\Property(property="password", type="string", format="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Profil client modifié avec succès"
+     *     )
+     * )
      */
-    // PUT /clients/{id_client}
     public function update(Request $request, $id)
     {
         $client = ModelClient::findOrFail($id);
@@ -111,9 +213,26 @@ class ModelClientController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/clients/{id}",
+     *     summary="Supprimer un client",
+     *     tags={"Clients"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Client supprimé"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Client non trouvé"
+     *     )
+     * )
      */
-    // DELETE /clients/{id_client}
     public function destroy($id)
     {
         $client = ModelClient::findOrFail($id);

@@ -2,24 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use OpenApi\Annotations as OA;
+
 use App\Models\Interprete;
 use Illuminate\Http\Request;
 
 class InterpreteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/interpretres",
+     *     summary="Liste des interprètes",
+     *     tags={"Interprètes"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Liste récupérée avec succès"
+     *     )
+     * )
      */
-    // GET /api/interpretres
     public function index()
     {
         return Interprete::all();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/interpretres",
+     *     summary="Créer un interprète",
+     *     tags={"Interprètes"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"id_medecin","nom","prenom"},
+     *             @OA\Property(property="id_medecin", type="integer"),
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="prenom", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Interprète créé avec succès"
+     *     )
+     * )
      */
-    // POST /api/interpretres
     public function store(Request $request)
     {
         $request->validate([
@@ -36,18 +61,57 @@ class InterpreteController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/interpretres/{id}",
+     *     summary="Afficher un interprète",
+     *     tags={"Interprètes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Interprète trouvé"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Interprète non trouvé"
+     *     )
+     * )
      */
-    // GET /api/interpretres/{id}
     public function show($id)
     {
         return Interprete::findOrFail($id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/interpretres/{id}",
+     *     summary="Modifier un interprète",
+     *     tags={"Interprètes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"id_medecin","nom","prenom"},
+     *             @OA\Property(property="id_medecin", type="integer"),
+     *             @OA\Property(property="nom", type="string"),
+     *             @OA\Property(property="prenom", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Interprète mis à jour"
+     *     )
+     * )
      */
-    // PUT /api/interpretres/{id}
     public function update(Request $request, $id)
     {
         $interprete = Interprete::findOrFail($id);
@@ -67,11 +131,27 @@ class InterpreteController extends Controller
         return $interprete;
     }
 
-
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/interpretres/{id}",
+     *     summary="Supprimer un interprète",
+     *     tags={"Interprètes"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Interprète supprimé"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Interprète non trouvé"
+     *     )
+     * )
      */
-    // DELETE /api/interpretres/{id}
     public function destroy($id)
     {
         $interprete = Interprete::findOrFail($id);

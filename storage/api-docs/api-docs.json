@@ -1,0 +1,751 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Ocytosign",
+        "description": "Documentation de l'API Ocytosign",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Serveur principal"
+        }
+    ],
+    "paths": {
+        "/api/interpretres": {
+            "get": {
+                "tags": [
+                    "Interprètes"
+                ],
+                "summary": "Liste des interprètes",
+                "operationId": "5d8b7285074a060c35b1f5fb5ddb81b1",
+                "responses": {
+                    "200": {
+                        "description": "Liste récupérée avec succès"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Interprètes"
+                ],
+                "summary": "Créer un interprète",
+                "operationId": "2f39bd903aabe80f735dd1497bb1c374",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_medecin",
+                                    "nom",
+                                    "prenom"
+                                ],
+                                "properties": {
+                                    "id_medecin": {
+                                        "type": "integer"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Interprète créé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/interpretres/{id}": {
+            "get": {
+                "tags": [
+                    "Interprètes"
+                ],
+                "summary": "Afficher un interprète",
+                "operationId": "919edbae12824f8d893edaf2e3a46f0a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Interprète trouvé"
+                    },
+                    "404": {
+                        "description": "Interprète non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Interprètes"
+                ],
+                "summary": "Modifier un interprète",
+                "operationId": "b8490b48b01a62d2ecbf28ed5eb698e0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_medecin",
+                                    "nom",
+                                    "prenom"
+                                ],
+                                "properties": {
+                                    "id_medecin": {
+                                        "type": "integer"
+                                    },
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Interprète mis à jour"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Interprètes"
+                ],
+                "summary": "Supprimer un interprète",
+                "operationId": "1f387bc8a815558ad5544c4beae0e06d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Interprète supprimé"
+                    },
+                    "404": {
+                        "description": "Interprète non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/medecins": {
+            "get": {
+                "tags": [
+                    "Médecins"
+                ],
+                "summary": "Liste des médecins",
+                "operationId": "6ab602fc805504c7805644cf370f89cd",
+                "responses": {
+                    "200": {
+                        "description": "Liste des médecins récupérée avec succès"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Médecins"
+                ],
+                "summary": "Créer un nouveau médecin",
+                "operationId": "999425c412ff82050637d174c566a2db",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Médecin créé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/medecins/{id}": {
+            "get": {
+                "tags": [
+                    "Médecins"
+                ],
+                "summary": "Afficher un médecin",
+                "operationId": "8667128b9a43942ac6386ee1c0befde5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Médecin trouvé"
+                    },
+                    "404": {
+                        "description": "Médecin non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Médecins"
+                ],
+                "summary": "Mettre à jour un médecin",
+                "operationId": "59c0f78c0afeab512befc9a84ad71a61",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Médecin mis à jour avec succès"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Médecins"
+                ],
+                "summary": "Supprimer un médecin",
+                "operationId": "842cacfbf68c23c09eff54e6c1949e8b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Médecin supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Médecin non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Liste des clients",
+                "operationId": "efec1fbc62336100a1959591f1a31579",
+                "responses": {
+                    "200": {
+                        "description": "Liste des clients récupérée avec succès"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Modifier un profil client",
+                "operationId": "3ec4a859bdae9f91970f5f5b136de6ad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "tel": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Profil client modifié avec succès"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Créer un nouveau client",
+                "operationId": "7083195c6971fbf6a78aaaa5d295b300",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "tel": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Client créé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Créer un nouveau profil client",
+                "operationId": "f1cc00fa23cb734595fa6988e3459ee9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "tel": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Profil client créé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Connexion du client",
+                "operationId": "6d0ab5976fc4e6c25cf7ea8bd6e57244",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connexion réussie, token retourné"
+                    },
+                    "401": {
+                        "description": "Identifiants invalides"
+                    }
+                }
+            }
+        },
+        "/api/clients/{id}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Afficher un client",
+                "operationId": "c39c8741d5e6ee40ccbb2cfd8b54c7c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client trouvé"
+                    },
+                    "404": {
+                        "description": "Client non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Supprimer un client",
+                "operationId": "218e74f93f4b90b345aded107d745e38",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client supprimé"
+                    },
+                    "404": {
+                        "description": "Client non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/rdvs": {
+            "get": {
+                "tags": [
+                    "RDV"
+                ],
+                "summary": "Liste tous les RDVs",
+                "operationId": "5ca4607af4c564ea3db6ce2faeb3306b",
+                "responses": {
+                    "200": {
+                        "description": "Liste des RDVs récupérée avec succès"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "RDV"
+                ],
+                "summary": "Créer un nouveau RDV",
+                "operationId": "8f9824ccabe6299d177ecc540b2891b3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_client",
+                                    "id_medecin",
+                                    "date_debut",
+                                    "date_fin",
+                                    "presentiel"
+                                ],
+                                "properties": {
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_medecin": {
+                                        "type": "integer"
+                                    },
+                                    "id_interprete": {
+                                        "type": "integer"
+                                    },
+                                    "date_debut": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "date_fin": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "presentiel": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "RDV créé avec succès"
+                    }
+                }
+            }
+        },
+        "/api/rdvs/{id}": {
+            "get": {
+                "tags": [
+                    "RDV"
+                ],
+                "summary": "Afficher un RDV précis",
+                "operationId": "285323a84483cf7f373a15102171cdc2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RDV trouvé"
+                    },
+                    "404": {
+                        "description": "RDV non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "RDV"
+                ],
+                "summary": "Mettre à jour un RDV",
+                "operationId": "13282cb588f49680d66523a55160014a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_client": {
+                                        "type": "integer"
+                                    },
+                                    "id_medecin": {
+                                        "type": "integer"
+                                    },
+                                    "id_interprete": {
+                                        "type": "integer"
+                                    },
+                                    "date_debut": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "date_fin": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "presentiel": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "RDV mis à jour avec succès"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "RDV"
+                ],
+                "summary": "Supprimer un RDV",
+                "operationId": "ab61943016968bece2811947693e7858",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "RDV supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "RDV non trouvé"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Interprètes",
+            "description": "Interprètes"
+        },
+        {
+            "name": "Médecins",
+            "description": "Médecins"
+        },
+        {
+            "name": "Clients",
+            "description": "Clients"
+        },
+        {
+            "name": "RDV",
+            "description": "RDV"
+        }
+    ]
+}
